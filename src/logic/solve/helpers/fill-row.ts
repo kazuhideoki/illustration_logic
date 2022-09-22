@@ -1,5 +1,9 @@
 import assert from "assert";
-import { SolvingRow } from "../solve";
+import { CellStatus } from "../solve";
+import {
+  generatePossibleFilledRow,
+  IndexedPossibleCell,
+} from "./generate-filled-row";
 
 // 埋める method
 // 1. 必要なデータを取得
@@ -20,12 +24,10 @@ import { SolvingRow } from "../solve";
 
 // 3. ※ Column の場合は 列を SolvingRow にマッピングする
 
-type SolvingCell = {
-  index: number;
-  cell: boolean;
-};
-
-export const fill = (currentRow: SolvingRow, nums: number[]): SolvingRow => {
+export const fillRow = (
+  currentRow: CellStatus[],
+  nums: number[]
+): CellStatus[] => {
   const cellCount = currentRow.length;
   assert(
     cellCount >= nums.reduce((acc, num) => acc + num, 0) + nums.length - 1
@@ -36,22 +38,26 @@ export const fill = (currentRow: SolvingRow, nums: number[]): SolvingRow => {
     numsRow,
     cellCount
   );
+  //TODO index も逆にする
   const filledNumsFromEnd: (boolean | null)[] = filledNumsRowForm(
     numsRow.reverse(),
     cellCount
   );
 
-  const filledRowFromStart: SolvingCell[] = [];
-  const filledRowFromEnd: SolvingCell[] = [];
+  const filledRowFromStart: IndexedPossibleCell[] = generatePossibleFilledRow(
+    nums,
+    currentRow
+  );
+  const filledRowFromEnd: IndexedPossibleCell[] = generatePossibleFilledRow(
+    nums.reverse(),
+    currentRow.reverse()
+  ).reverse();
 
-  // for (let i = 0; i < cellCount; i++) {
-  //   const cellInRow = row[i];
-
-  //   const solvingCell: SolvingCell = {
-  //     index: i,
-  //     cell,
-  //   };
-  // }
+  const updatedRow: CellStatus[] = [];
+  // currentRow で UNKNOWN の場所において、 filledRowFromStart と filledRowFromEnd を比較して、結果に反映する
+  // TRUE が重なるところは 新たに TRUE にする
+  // FALSE は FALSE にする
+  // その他は UNKNOWN にする
 };
 
 export const numsRowFrom = (nums: number[]): boolean[] => {
@@ -75,8 +81,3 @@ export const filledNumsRowForm = (
       return e;
     });
 };
-
-export const generateFilledRow = (
-  currentRow: SolvingRow,
-  filledNums: boolean[]
-): SolvingCell[] => {};

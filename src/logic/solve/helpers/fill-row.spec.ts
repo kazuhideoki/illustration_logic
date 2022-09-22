@@ -1,7 +1,7 @@
 import { describe, expect } from "@jest/globals";
-import { filledNumsRowForm, numsRowFrom } from "./fill";
+import { filledNumsRowForm, numsRowFrom } from "./fill-row";
 
-describe("fill", () => {
+describe("fillRow", () => {
   it("numsRowFrom", () => {
     const r = numsRowFrom([1]);
     expect(r).toStrictEqual([true]);

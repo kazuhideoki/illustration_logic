@@ -1,18 +1,14 @@
-import { Problem } from "problem/problem";
+import { Problem } from "../problem/problem";
 
-export enum ProcessingCell {
+export enum CellStatus {
   TRUE = "TRUE",
   FALSE = "FALSE",
   UNKNOWN = "UNKNOWN",
 }
 
-export type SolvingRow = ProcessingCell[];
-export type Solving = SolvingRow[];
+export type Solving = CellStatus[][];
 
-export type ACell = boolean;
-export type ARow = ACell[];
-export type Answer = ARow[];
-export const solve = (problem: Problem): Answer => {
+export const solve = (problem: Problem): boolean[][] => {
   const { rows, columns } = problem;
   const rowCount = rows.length;
   const columnCount = columns.length;
