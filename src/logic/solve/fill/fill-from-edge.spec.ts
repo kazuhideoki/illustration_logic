@@ -1,69 +1,48 @@
 import { describe, expect } from "@jest/globals";
-import { CellStatus } from "../solve";
-import {
-  generatePossibleFilledRow,
-  pickFirstElements,
-  pickTarget,
-} from "./generate-filled-row";
+import { CellStatus } from "../../helper/type";
+import { fillFromEdge, hasTarget } from "./fill-from-edge";
 
 describe("generateFilledRow", () => {
-  it("pickFirstElements", () => {
-    const r = pickFirstElements([true, true, false], true);
-    expect(r).toStrictEqual([true, true]);
-
-    const r2 = pickFirstElements([1, 1, 2, 1, 1], 1);
-    expect(r2).toStrictEqual([1, 1]);
-
-    const r3 = pickFirstElements([1, 1, 2, 2, 1], 2);
-    expect(r3).toStrictEqual([2, 2]);
-  });
-
   it("pickTarget", () => {
-    const r = pickTarget(1, [CellStatus.UNKNOWN]);
-    expect(r.hasTarget).toBe(true);
-    expect(r.targetCells).toStrictEqual([CellStatus.UNKNOWN]);
+    const r = hasTarget(1, [CellStatus.UNKNOWN]);
+    expect(r).toBe(true);
 
-    const r2 = pickTarget(2, [CellStatus.TRUE, CellStatus.UNKNOWN]);
-    expect(r2.hasTarget).toBe(true);
-    expect(r2.targetCells).toStrictEqual([CellStatus.TRUE, CellStatus.UNKNOWN]);
+    const r2 = hasTarget(2, [CellStatus.TRUE, CellStatus.UNKNOWN]);
+    expect(r2).toBe(true);
 
-    const r3 = pickTarget(2, [CellStatus.FALSE, CellStatus.TRUE]);
-    expect(r3.hasTarget).toBe(false);
-    expect(r3.targetCells).toStrictEqual(undefined);
+    const r3 = hasTarget(2, [CellStatus.FALSE, CellStatus.TRUE]);
+    expect(r3).toBe(false);
 
-    const r4 = pickTarget(2, [
+    const r4 = hasTarget(2, [
       CellStatus.UNKNOWN,
       CellStatus.TRUE,
       CellStatus.TRUE,
       CellStatus.FALSE,
     ]);
-    expect(r4.hasTarget).toBe(true);
-    expect(r4.targetCells).toStrictEqual([CellStatus.UNKNOWN, CellStatus.TRUE]);
+    expect(r4).toBe(false);
 
-    const r5 = pickTarget(2, [
+    const r5 = hasTarget(2, [
       CellStatus.FALSE,
       CellStatus.TRUE,
       CellStatus.TRUE,
       CellStatus.FALSE,
     ]);
-    expect(r5.hasTarget).toBe(false);
-    expect(r5.targetCells).toStrictEqual(undefined);
+    expect(r5).toBe(false);
 
-    // const r6 = pickTarget(2, [
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.TRUE,
-    //   CellStatus.TRUE,
-    // ]);
-    // expect(r6.hasTarget).toBe(false);
-    // expect(r6.targetCells).toStrictEqual(undefined);
+    const r6 = hasTarget(2, [
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+    ]);
+    expect(r6).toBe(false);
   });
 
-  it("generatePossibleFilledRow", () => {
-    const r = generatePossibleFilledRow([1], [CellStatus.UNKNOWN]);
+  it("fillFromEdge", () => {
+    const r = fillFromEdge([1], [CellStatus.UNKNOWN]);
     expect(r).toStrictEqual([{ index: 0, cell: CellStatus.TRUE }]);
 
-    const r2 = generatePossibleFilledRow(
+    const r2 = fillFromEdge(
       [2],
       [CellStatus.UNKNOWN, CellStatus.UNKNOWN, CellStatus.UNKNOWN]
     );
@@ -73,7 +52,7 @@ describe("generateFilledRow", () => {
       { index: null, cell: CellStatus.UNKNOWN },
     ]);
 
-    const r3 = generatePossibleFilledRow(
+    const r3 = fillFromEdge(
       [3, 1],
       [
         CellStatus.UNKNOWN,
@@ -90,8 +69,7 @@ describe("generateFilledRow", () => {
       { index: null, cell: CellStatus.FALSE },
       { index: 1, cell: CellStatus.TRUE },
     ]);
-
-    const r4 = generatePossibleFilledRow(
+    const r4 = fillFromEdge(
       [3, 2],
       [
         CellStatus.UNKNOWN,
@@ -112,8 +90,7 @@ describe("generateFilledRow", () => {
       { index: 1, cell: CellStatus.TRUE },
       { index: null, cell: CellStatus.UNKNOWN },
     ]);
-
-    const r5 = generatePossibleFilledRow(
+    const r5 = fillFromEdge(
       [3, 2],
       [
         CellStatus.UNKNOWN,
@@ -134,27 +111,29 @@ describe("generateFilledRow", () => {
       { index: 1, cell: CellStatus.TRUE },
       { index: 1, cell: CellStatus.TRUE },
     ]);
-
-    const r6 = generatePossibleFilledRow(
+    const r6 = fillFromEdge(
       [3, 2],
       [
         CellStatus.UNKNOWN,
         CellStatus.UNKNOWN,
-        CellStatus.UNKNOWN,
+        CellStatus.TRUE,
         CellStatus.TRUE,
         CellStatus.UNKNOWN,
         CellStatus.UNKNOWN,
         CellStatus.TRUE,
+        CellStatus.UNKNOWN,
       ]
     );
+
     expect(r6).toStrictEqual([
-      { index: 0, cell: CellStatus.TRUE },
+      { index: null, cell: CellStatus.FALSE },
       { index: 0, cell: CellStatus.TRUE },
       { index: 0, cell: CellStatus.TRUE },
       { index: 0, cell: CellStatus.TRUE },
       { index: null, cell: CellStatus.FALSE },
       { index: 1, cell: CellStatus.TRUE },
       { index: 1, cell: CellStatus.TRUE },
+      { index: null, cell: CellStatus.UNKNOWN },
     ]);
   });
 });

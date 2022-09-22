@@ -1,24 +1,23 @@
 import assert from "assert";
-import { CellStatus } from "../solve";
-import { IndexedCellStatus } from "./generate-filled-row";
+import { CellStatus, IndexedCellStatus } from "../../helper/type";
 
 /**
  * 双方向の filledRow をマージする
  */
-export const mergeFilledRow = (
-  currentRow: CellStatus[],
-  fromStart: IndexedCellStatus[],
-  fromEnd: IndexedCellStatus[],
+export const mergeFills = (
+  currentCells: CellStatus[],
+  fromFirst: IndexedCellStatus[],
+  fromLast: IndexedCellStatus[],
   nums: number[]
 ): CellStatus[] => {
   assert(
-    currentRow.length === fromStart.length &&
-      currentRow.length === fromEnd.length
+    currentCells.length === fromFirst.length &&
+      currentCells.length === fromLast.length
   );
   let mergedRow: CellStatus[] = [];
 
-  for (let i = 0; i < fromStart.length; i++) {
-    const current = currentRow[i];
+  for (let i = 0; i < fromFirst.length; i++) {
+    const current = currentCells[i];
 
     if (current === CellStatus.TRUE) {
       mergedRow.push(CellStatus.TRUE);
@@ -28,8 +27,8 @@ export const mergeFilledRow = (
       continue;
     }
 
-    const start = fromStart[i];
-    const end = fromEnd[i];
+    const start = fromFirst[i];
+    const end = fromLast[i];
 
     const isOverlapped =
       start.index !== null && end.index !== null && start.index === end.index;
@@ -49,7 +48,7 @@ export const mergeFilledRow = (
 
   // currentRow と 変化がない & すべて埋まっている場合は UNKNOWN を FALSE に変換する
   if (
-    mergedRow.every((cell, i) => cell === currentRow[i]) &&
+    mergedRow.every((cell, i) => cell === currentCells[i]) &&
     nums.reduce((acc, num) => acc + num, 0) ===
       mergedRow.filter((e) => e === CellStatus.TRUE).length
   ) {

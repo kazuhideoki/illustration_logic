@@ -1,5 +1,5 @@
 import assert from "assert";
-import { CellStatus } from "../solve";
+import { CellStatus } from "../../helper/type";
 export const extractColumn = (
   answer: CellStatus[][],
   columnIndex: number
@@ -8,7 +8,7 @@ export const extractColumn = (
   return answer.map((row) => row[columnIndex]);
 };
 
-export const convertFilledRowIntoAnswer = (
+export const convertFilledColumnIntoAnswer = (
   answer: CellStatus[][],
   filledColumn: CellStatus[],
   columnIndex: number

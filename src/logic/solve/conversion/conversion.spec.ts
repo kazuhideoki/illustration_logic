@@ -1,5 +1,5 @@
-import { CellStatus } from "../solve";
-import { convertFilledRowIntoAnswer, extractColumn } from "./conversion";
+import { CellStatus } from "../../helper/type";
+import { convertFilledColumnIntoAnswer, extractColumn } from "./conversion";
 
 describe("conversion", () => {
   it("extractColumn", () => {
@@ -21,8 +21,8 @@ describe("conversion", () => {
     ]);
   });
 
-  it("convertFilledRowIntoAnswer", () => {
-    const r = convertFilledRowIntoAnswer(
+  it("convertFilledColumnIntoAnswer", () => {
+    const r = convertFilledColumnIntoAnswer(
       [
         [CellStatus.UNKNOWN, CellStatus.UNKNOWN],
         [CellStatus.UNKNOWN, CellStatus.UNKNOWN],
@@ -35,7 +35,7 @@ describe("conversion", () => {
       [CellStatus.TRUE, CellStatus.UNKNOWN],
     ]);
 
-    const r2 = convertFilledRowIntoAnswer(
+    const r2 = convertFilledColumnIntoAnswer(
       [
         [CellStatus.UNKNOWN, CellStatus.UNKNOWN, CellStatus.UNKNOWN],
         [CellStatus.UNKNOWN, CellStatus.UNKNOWN, CellStatus.UNKNOWN],

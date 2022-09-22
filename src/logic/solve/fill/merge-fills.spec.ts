@@ -1,8 +1,9 @@
-import { CellStatus } from "../solve";
-import { mergeFilledRow } from "./merge-filled-row";
-describe("mergeFilledRow", () => {
-  it("mergeFilledRow", () => {
-    const r = mergeFilledRow(
+import { CellStatus } from "../../helper/type";
+import {} from "../solve";
+import { mergeFills } from "./merge-fills";
+describe("mergeFills", () => {
+  it("mergeFills", () => {
+    const r = mergeFills(
       [CellStatus.UNKNOWN],
       [{ index: 0, cell: CellStatus.TRUE }],
       [{ index: 0, cell: CellStatus.TRUE }],
@@ -10,7 +11,7 @@ describe("mergeFilledRow", () => {
     );
     expect(r).toStrictEqual([CellStatus.TRUE]);
 
-    const r2 = mergeFilledRow(
+    const r2 = mergeFills(
       [CellStatus.UNKNOWN, CellStatus.UNKNOWN],
       [
         { index: 0, cell: CellStatus.TRUE },
@@ -24,7 +25,7 @@ describe("mergeFilledRow", () => {
     );
     expect(r2).toStrictEqual([CellStatus.UNKNOWN, CellStatus.UNKNOWN]);
 
-    const r3 = mergeFilledRow(
+    const r3 = mergeFills(
       [
         CellStatus.UNKNOWN,
         CellStatus.UNKNOWN,
@@ -64,7 +65,7 @@ describe("mergeFilledRow", () => {
       CellStatus.UNKNOWN,
     ]);
 
-    const r4 = mergeFilledRow(
+    const r4 = mergeFills(
       [
         CellStatus.UNKNOWN,
         CellStatus.UNKNOWN,

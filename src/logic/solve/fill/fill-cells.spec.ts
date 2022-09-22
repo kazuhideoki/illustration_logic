@@ -1,5 +1,5 @@
 import { describe, expect } from "@jest/globals";
-import { CellStatus } from "../solve";
+import { CellStatus } from "../../helper/type";
 import { fillCells } from "./fill-cells";
 
 describe("fillCells", () => {
@@ -103,42 +103,42 @@ describe("fillCells", () => {
       CellStatus.UNKNOWN,
     ]);
 
-    // const r8 = fillCells(
-    //   [
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.FALSE,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //     CellStatus.UNKNOWN,
-    //   ],
-    //   [1, 2, 2, 1, 1]
-    // );
-    // expect(r8).toStrictEqual([
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.FALSE,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    //   CellStatus.UNKNOWN,
-    // ]);
+    const r8 = fillCells(
+      [
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.FALSE,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+      ],
+      [1, 2, 2, 1, 1]
+    );
+    expect(r8).toStrictEqual([
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.FALSE,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+    ]);
   });
 });
