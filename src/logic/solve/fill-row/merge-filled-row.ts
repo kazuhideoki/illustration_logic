@@ -8,7 +8,8 @@ import { IndexedCellStatus } from "./generate-filled-row";
 export const mergeFilledRow = (
   currentRow: CellStatus[],
   fromStart: IndexedCellStatus[],
-  fromEnd: IndexedCellStatus[]
+  fromEnd: IndexedCellStatus[],
+  nums: number[]
 ): CellStatus[] => {
   assert(
     currentRow.length === fromStart.length &&
@@ -44,6 +45,17 @@ export const mergeFilledRow = (
     } else {
       mergedRow.push(CellStatus.UNKNOWN);
     }
+  }
+
+  // currentRow と 変化がない & すべて埋まっている場合は UNKNOWN を FALSE に変換する
+  if (
+    mergedRow.every((cell, i) => cell === currentRow[i]) &&
+    nums.reduce((acc, num) => acc + num, 0) ===
+      mergedRow.filter((e) => e === CellStatus.TRUE).length
+  ) {
+    mergedRow = mergedRow.map((cell) =>
+      cell === CellStatus.UNKNOWN ? CellStatus.FALSE : cell
+    );
   }
 
   return mergedRow;

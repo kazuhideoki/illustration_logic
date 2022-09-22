@@ -9,10 +9,14 @@ import { IndexedCellStatus } from "./generate-filled-row";
 export const reverseIndex = (
   filledRow: IndexedCellStatus[]
 ): IndexedCellStatus[] => {
+  console.log("reverseIndex, start");
+
   const indexes = uniq(
     filledRow.map((cell) => cell.index).filter((e) => e !== null)
   );
   const reversedIndexes = indexes.reverse();
+
+  console.log({ indexes, reversedIndexes });
 
   const reverseIndexedRow: IndexedCellStatus[] = [];
   for (let i = 0; i < filledRow.length; i++) {
@@ -29,6 +33,8 @@ export const reverseIndex = (
       reversedIndexes.shift();
     }
   }
+
+  console.log("reverseIndex, end");
 
   return reverseIndexedRow;
 };

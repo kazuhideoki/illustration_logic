@@ -1,5 +1,6 @@
 import assert from "assert";
 import { CellStatus } from "../solve";
+import { debugLog } from "./fill-cells";
 
 export type IndexedCellStatus = {
   index: number | null;
@@ -16,11 +17,15 @@ export const generatePossibleFilledRow = (
   nums: number[],
   currentRow: CellStatus[]
 ): IndexedCellStatus[] => {
+  const debug = debugLog([...nums].reverse());
+  debug("generatePossibleFilledRow start");
   let remainingRow = [...currentRow];
   let filledRow: IndexedCellStatus[] = [];
 
+  debug("", { remainingRow, filledRow, nums });
   for (let i = 0; i < nums.length; ) {
-    const num = nums[i];
+    // debug("loop", i); // 2 で無限ループ
+    const num = nums[i]; // 2
 
     const { hasTarget } = pickTarget(num, remainingRow);
 
@@ -50,7 +55,6 @@ export const generatePossibleFilledRow = (
           remainingRow.shift();
         }
       }
-
       i++;
     } else {
       while (remainingRow[0] === CellStatus.FALSE) {
@@ -59,6 +63,8 @@ export const generatePossibleFilledRow = (
       }
     }
   }
+
+  debug("generatePossibleFilledRow for loop end");
 
   // 最後に穴埋めする
   // for (let i = filledRow.length; i < currentRow.length; i++) {
@@ -72,6 +78,8 @@ export const generatePossibleFilledRow = (
   }
 
   assert(filledRow.length === currentRow.length);
+
+  debug("generatePossibleFilledRow end");
 
   return filledRow;
 };
@@ -105,11 +113,13 @@ export const pickFirstElements = <T>(arr: any[], element: T): T[] => {
  * 指定した num で最初の部分を抜き出す
  */
 export const pickTarget = (num: number, remainingRow: CellStatus[]) => {
-  const cells = Array(num)
+  const cells = Array(num) // 2
     .fill("")
     .map((e, j) => remainingRow[j])
     .filter((e) => e === CellStatus.UNKNOWN || e === CellStatus.TRUE);
-  const hasTarget = cells.length === num;
+  const hasTarget =
+    // cells.length === num && [...remainingRow].slice(num)[0] !== CellStatus.TRUE;
+    cells.length === num;
 
   const targetCells = hasTarget ? cells : undefined;
 

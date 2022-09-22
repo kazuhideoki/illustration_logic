@@ -5,7 +5,8 @@ describe("mergeFilledRow", () => {
     const r = mergeFilledRow(
       [CellStatus.UNKNOWN],
       [{ index: 0, cell: CellStatus.TRUE }],
-      [{ index: 0, cell: CellStatus.TRUE }]
+      [{ index: 0, cell: CellStatus.TRUE }],
+      [1]
     );
     expect(r).toStrictEqual([CellStatus.TRUE]);
 
@@ -18,7 +19,8 @@ describe("mergeFilledRow", () => {
       [
         { index: 0, cell: CellStatus.UNKNOWN },
         { index: 0, cell: CellStatus.TRUE },
-      ]
+      ],
+      [1]
     );
     expect(r2).toStrictEqual([CellStatus.UNKNOWN, CellStatus.UNKNOWN]);
 
@@ -49,7 +51,8 @@ describe("mergeFilledRow", () => {
         { index: null, cell: CellStatus.FALSE },
         { index: 1, cell: CellStatus.TRUE },
         { index: 1, cell: CellStatus.TRUE },
-      ]
+      ],
+      [3, 2]
     );
     expect(r3).toStrictEqual([
       CellStatus.UNKNOWN,
@@ -59,6 +62,46 @@ describe("mergeFilledRow", () => {
       CellStatus.UNKNOWN,
       CellStatus.TRUE,
       CellStatus.UNKNOWN,
+    ]);
+
+    const r4 = mergeFilledRow(
+      [
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+      ],
+      [
+        { index: 0, cell: CellStatus.TRUE },
+        { index: 0, cell: CellStatus.TRUE },
+        { index: 0, cell: CellStatus.TRUE },
+        { index: null, cell: CellStatus.FALSE },
+        { index: 1, cell: CellStatus.TRUE },
+        { index: 1, cell: CellStatus.TRUE },
+        { index: null, cell: CellStatus.FALSE },
+      ],
+      [
+        { index: 0, cell: CellStatus.TRUE },
+        { index: 0, cell: CellStatus.TRUE },
+        { index: 0, cell: CellStatus.TRUE },
+        { index: null, cell: CellStatus.FALSE },
+        { index: 1, cell: CellStatus.TRUE },
+        { index: 1, cell: CellStatus.TRUE },
+        { index: null, cell: CellStatus.FALSE },
+      ],
+      [3, 2]
+    );
+    expect(r4).toStrictEqual([
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.FALSE,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.FALSE,
     ]);
   });
 });

@@ -48,6 +48,15 @@ describe("generateFilledRow", () => {
     ]);
     expect(r5.hasTarget).toBe(false);
     expect(r5.targetCells).toStrictEqual(undefined);
+
+    // const r6 = pickTarget(2, [
+    //   CellStatus.UNKNOWN,
+    //   CellStatus.UNKNOWN,
+    //   CellStatus.TRUE,
+    //   CellStatus.TRUE,
+    // ]);
+    // expect(r6.hasTarget).toBe(false);
+    // expect(r6.targetCells).toStrictEqual(undefined);
   });
 
   it("generatePossibleFilledRow", () => {

@@ -1,4 +1,5 @@
 import assert from "assert";
+import { isEqual } from "lodash";
 import { CellStatus } from "../solve";
 import {
   generatePossibleFilledRow,
@@ -26,31 +27,47 @@ import { reverseIndex } from "./reverse-index";
 
 // 3. ※ Column の場合は 列を SolvingRow にマッピングする
 
-export const fillRow = (
+export const debugLog = (nums: number[]) => {
+  if (isEqual(nums, [1, 2, 2, 1, 1])) {
+    return (message: any, detail?: any) => {
+      console.log(message, detail);
+    };
+  }
+
+  return (message: any, detail?: any) => {};
+};
+
+export const fillCells = (
   currentRow: CellStatus[],
   nums: number[]
 ): CellStatus[] => {
+  const debug = debugLog(nums);
   const cellCount = currentRow.length;
   assert(
     cellCount >= nums.reduce((acc, num) => acc + num, 0) + nums.length - 1
   );
+  debug({ currentRow, nums });
 
   const filledRowFromStart: IndexedCellStatus[] = generatePossibleFilledRow(
     nums,
     currentRow
   );
-  const filledRowFromEnd: IndexedCellStatus[] = reverseIndex(
-    generatePossibleFilledRow(
-      [...nums].reverse(),
-      [...currentRow].reverse()
-    ).reverse()
-  );
+  debug({ filledRowFromStart });
+  let filledRowFromEnd: IndexedCellStatus[] = generatePossibleFilledRow(
+    [...nums].reverse(),
+    [...currentRow].reverse()
+  ).reverse();
+  debug({ filledRowFromEnd });
+  filledRowFromEnd = reverseIndex(filledRowFromEnd);
+  debug({ filledRowFromEnd });
 
   const mergedRow: CellStatus[] = mergeFilledRow(
     currentRow,
     filledRowFromStart,
-    filledRowFromEnd
+    filledRowFromEnd,
+    nums
   );
+  debug({ mergedRow });
 
   return mergedRow;
 };
