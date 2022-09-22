@@ -1,5 +1,5 @@
 import { describe, expect } from "@jest/globals";
-import { CellStatus } from "../../helper/type";
+import { CellStatus } from "../../../helper/type";
 import { fillFromEdge, hasTarget } from "./fill-from-edge";
 
 describe("generateFilledRow", () => {

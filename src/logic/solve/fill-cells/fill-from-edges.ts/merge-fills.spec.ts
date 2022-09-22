@@ -1,5 +1,4 @@
-import { CellStatus } from "../../helper/type";
-import {} from "../solve";
+import { CellStatus } from "../../../helper/type";
 import { mergeFills } from "./merge-fills";
 describe("mergeFills", () => {
   it("mergeFills", () => {

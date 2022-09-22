@@ -1,5 +1,5 @@
 import assert from "assert";
-import { CellStatus, IndexedCellStatus } from "../../helper/type";
+import { CellStatus, IndexedCellStatus } from "../../../helper/type";
 
 /**
  * 双方向の filledRow をマージする

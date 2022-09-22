@@ -4,7 +4,7 @@ import {
   convertFilledColumnIntoAnswer,
   extractColumn,
 } from "./conversion/conversion";
-import { fillCells } from "./fill/fill-cells";
+import { fillCells } from "./fill-cells/fill-cells";
 
 export const solve = (problem: {
   rows: number[][];

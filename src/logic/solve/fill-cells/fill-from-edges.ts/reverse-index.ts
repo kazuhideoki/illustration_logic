@@ -1,5 +1,5 @@
 import { uniq } from "lodash";
-import { IndexedCellStatus } from "./fill-from-edge";
+import { IndexedCellStatus } from "../../../helper/type";
 
 /**
  * filledRow の index を数字の部分のみ逆にする

@@ -1,5 +1,5 @@
 import assert from "assert";
-import { CellStatus, IndexedCellStatus } from "../../helper/type";
+import { CellStatus, IndexedCellStatus } from "../../../helper/type";
 
 /**
  * 端から埋めていくときの結果を取得
