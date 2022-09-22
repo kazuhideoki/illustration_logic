@@ -1,46 +1,106 @@
 import { describe, expect } from "@jest/globals";
-import { filledNumsRowForm, numsRowFrom } from "./fill-row";
+import { CellStatus } from "../solve";
+import { fillRow } from "./fill-row";
 
 describe("fillRow", () => {
-  it("numsRowFrom", () => {
-    const r = numsRowFrom([1]);
-    expect(r).toStrictEqual([true]);
+  it("fillRow", () => {
+    const r = fillRow([CellStatus.UNKNOWN], [1]);
+    expect(r).toStrictEqual([CellStatus.TRUE]);
 
-    const r2 = numsRowFrom([1, 2]);
-    expect(r2).toStrictEqual([true, false, true, true]);
+    const r2 = fillRow([CellStatus.TRUE, CellStatus.UNKNOWN], [2]);
+    expect(r2).toStrictEqual([CellStatus.TRUE, CellStatus.TRUE]);
 
-    const r3 = numsRowFrom([1, 2, 3]);
+    const r3 = fillRow(
+      [CellStatus.UNKNOWN, CellStatus.UNKNOWN, CellStatus.UNKNOWN],
+      [1]
+    );
     expect(r3).toStrictEqual([
-      true,
-      false,
-      true,
-      true,
-      false,
-      true,
-      true,
-      true,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
     ]);
-  });
 
-  it("filledNumsRowForm", () => {
-    const r = filledNumsRowForm([true, false, true, true], 4);
-    expect(r).toStrictEqual([true, false, true, true]);
+    const r4 = fillRow(
+      [CellStatus.UNKNOWN, CellStatus.UNKNOWN, CellStatus.UNKNOWN],
+      [2]
+    );
+    expect(r4).toStrictEqual([
+      CellStatus.UNKNOWN,
+      CellStatus.TRUE,
+      CellStatus.UNKNOWN,
+    ]);
 
-    const r2 = filledNumsRowForm([true, false, true, true], 5);
-    expect(r2).toStrictEqual([true, false, true, true, null]);
+    const r5 = fillRow(
+      [
+        CellStatus.UNKNOWN,
+        CellStatus.FALSE,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.TRUE,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+      ],
+      [1, 3]
+    );
+    expect(r5).toStrictEqual([
+      CellStatus.UNKNOWN,
+      CellStatus.FALSE,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+      CellStatus.TRUE,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+    ]);
 
-    const r3 = filledNumsRowForm([true, false, true, false, true], 10);
-    expect(r3).toStrictEqual([
-      true,
-      false,
-      true,
-      false,
-      true,
-      null,
-      null,
-      null,
-      null,
-      null,
+    const r6 = fillRow(
+      [
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.FALSE,
+        CellStatus.UNKNOWN,
+        CellStatus.TRUE,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+      ],
+      [2, 3]
+    );
+    expect(r6).toStrictEqual([
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.FALSE,
+      CellStatus.UNKNOWN,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.UNKNOWN,
+      CellStatus.UNKNOWN,
+    ]);
+
+    // ロジック改善できる
+    const r7 = fillRow(
+      [
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.TRUE,
+        CellStatus.FALSE,
+        CellStatus.TRUE,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+        CellStatus.UNKNOWN,
+      ],
+      [3, 3]
+    );
+    expect(r7).toStrictEqual([
+      CellStatus.UNKNOWN,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.FALSE,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.TRUE,
+      CellStatus.UNKNOWN,
     ]);
   });
 });

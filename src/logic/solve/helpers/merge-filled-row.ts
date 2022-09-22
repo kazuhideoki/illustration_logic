@@ -1,11 +1,14 @@
 import assert from "assert";
 import { CellStatus } from "../solve";
-import { IndexedPossibleCell } from "./generate-filled-row";
+import { IndexedCellStatus } from "./generate-filled-row";
 
+/**
+ * 双方向の filledRow をマージする
+ */
 export const mergeFilledRow = (
   currentRow: CellStatus[],
-  fromStart: IndexedPossibleCell[],
-  fromEnd: IndexedPossibleCell[]
+  fromStart: IndexedCellStatus[],
+  fromEnd: IndexedCellStatus[]
 ): CellStatus[] => {
   assert(
     currentRow.length === fromStart.length &&

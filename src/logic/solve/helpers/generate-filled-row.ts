@@ -1,7 +1,7 @@
 import assert from "assert";
 import { CellStatus } from "../solve";
 
-export type IndexedPossibleCell = {
+export type IndexedCellStatus = {
   index: number | null;
   cell: CellStatus;
 };
@@ -15,9 +15,9 @@ export type IndexedPossibleCell = {
 export const generatePossibleFilledRow = (
   nums: number[],
   currentRow: CellStatus[]
-): IndexedPossibleCell[] => {
+): IndexedCellStatus[] => {
   let remainingRow = [...currentRow];
-  let filledRow: IndexedPossibleCell[] = [];
+  let filledRow: IndexedCellStatus[] = [];
 
   for (let i = 0; i < nums.length; ) {
     const num = nums[i];
@@ -76,6 +76,10 @@ export const generatePossibleFilledRow = (
   return filledRow;
 };
 
+/**
+ * 指定した element で最初の部分を抜き出す
+ * @deprecated
+ */
 export const pickFirstElements = <T>(arr: any[], element: T): T[] => {
   const index = arr.indexOf(element); // 2
 
@@ -97,6 +101,9 @@ export const pickFirstElements = <T>(arr: any[], element: T): T[] => {
   return res;
 };
 
+/**
+ * 指定した num で最初の部分を抜き出す
+ */
 export const pickTarget = (num: number, remainingRow: CellStatus[]) => {
   const cells = Array(num)
     .fill("")

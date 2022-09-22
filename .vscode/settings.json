@@ -1,3 +1,4 @@
 {
-  "jestrunner.configPath": "jest.config.js"
+  "jestrunner.configPath": "jest.config.js",
+  "cSpell.words": ["nums"]
 }

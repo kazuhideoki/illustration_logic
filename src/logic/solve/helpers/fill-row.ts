@@ -2,8 +2,10 @@ import assert from "assert";
 import { CellStatus } from "../solve";
 import {
   generatePossibleFilledRow,
-  IndexedPossibleCell,
+  IndexedCellStatus,
 } from "./generate-filled-row";
+import { mergeFilledRow } from "./merge-filled-row";
+import { reverseIndex } from "./reverse-index";
 
 // 埋める method
 // 1. 必要なデータを取得
@@ -33,51 +35,22 @@ export const fillRow = (
     cellCount >= nums.reduce((acc, num) => acc + num, 0) + nums.length - 1
   );
 
-  const numsRow: boolean[] = numsRowFrom(nums);
-  const filledNumsFromStart: (boolean | null)[] = filledNumsRowForm(
-    numsRow,
-    cellCount
-  );
-  //TODO index も逆にする
-  const filledNumsFromEnd: (boolean | null)[] = filledNumsRowForm(
-    numsRow.reverse(),
-    cellCount
-  );
-
-  const filledRowFromStart: IndexedPossibleCell[] = generatePossibleFilledRow(
+  const filledRowFromStart: IndexedCellStatus[] = generatePossibleFilledRow(
     nums,
     currentRow
   );
-  const filledRowFromEnd: IndexedPossibleCell[] = generatePossibleFilledRow(
-    nums.reverse(),
-    currentRow.reverse()
-  ).reverse();
+  const filledRowFromEnd: IndexedCellStatus[] = reverseIndex(
+    generatePossibleFilledRow(
+      [...nums].reverse(),
+      [...currentRow].reverse()
+    ).reverse()
+  );
 
-  const updatedRow: CellStatus[] = [];
-  // currentRow で UNKNOWN の場所において、 filledRowFromStart と filledRowFromEnd を比較して、結果に反映する
-  // TRUE が重なるところは 新たに TRUE にする
-  // FALSE は FALSE にする
-  // その他は UNKNOWN にする
-};
+  const mergedRow: CellStatus[] = mergeFilledRow(
+    currentRow,
+    filledRowFromStart,
+    filledRowFromEnd
+  );
 
-export const numsRowFrom = (nums: number[]): boolean[] => {
-  return nums
-    .map((num, i) => [i !== 0 ? false : undefined, ...Array(num).fill(true)])
-    .flat()
-    .filter((e) => e !== undefined);
-};
-
-export const filledNumsRowForm = (
-  numsArray: boolean[],
-  cellCount: number
-): (boolean | null)[] => {
-  return Array(cellCount)
-    .fill(null)
-    .map((e, i) => {
-      if (i < numsArray.length) {
-        return numsArray[i];
-      }
-
-      return e;
-    });
+  return mergedRow;
 };
