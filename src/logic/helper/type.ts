@@ -9,10 +9,13 @@ export type IndexedCellStatus = {
   cell: CellStatus;
 };
 
-export type SeparatedArea = {
-  areaLength: number;
+export type Separation = {
+  separationsLength: number;
   startIndex: number;
   endIndex: number;
 };
 
-export type SeparatedPattern = { area: number[]; startIndex: number }[];
+export type NumSeparationPatterns = {
+  numsInSeparation: number[];
+  startIndex: number;
+}[];

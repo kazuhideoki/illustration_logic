@@ -13,11 +13,9 @@ export const fillCells = (
   );
 
   let filled: CellStatus[] = fillFromEdges(nums, currentCells);
-  console.log("filled", filled);
 
   // TODO まだ変わってない。。。中でロジックを改善する必要がある
   filled = extend(nums, filled);
-  console.log("filled2", filled);
 
   return filled;
 };

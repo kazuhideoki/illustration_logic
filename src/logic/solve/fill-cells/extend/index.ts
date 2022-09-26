@@ -1,18 +1,17 @@
 import { CellStatus } from "../../../helper/type";
-import { fillFixedSets } from "./fill-areas/fill-areas";
-import { areaFromCells } from "./generate-areas/area-from-cells";
-import { generatePatterns } from "./generate-areas/index";
+import { fillFixedSeparations } from "./fill-fixed-separations/fill-fixed-separations";
+import { generateSeparations } from "./generate-separations/generate-separations";
+import { generatePatterns } from "./generate-separations/index";
 
 export const extend = (
   nums: number[],
   currentCells: CellStatus[]
 ): CellStatus[] => {
-  const areas = areaFromCells(currentCells);
+  const separations = generateSeparations(currentCells);
 
-  // false を区切りにして、num をあてはめる -> generateAreaPatterns
-  const patterns = generatePatterns(nums, currentCells);
+  const patterns = generatePatterns(nums, separations);
 
-  return fillFixedSets(nums, areas, patterns, currentCells);
+  return fillFixedSeparations(nums, separations, patterns, currentCells);
 
   // TODO すでに TRUE のところをマッピングする
   // 1. 一つのエリアの中で nums の組み合わせが確定して場合、それを使って埋める -> fillFromEdges

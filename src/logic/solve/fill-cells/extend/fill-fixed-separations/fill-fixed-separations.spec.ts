@@ -1,45 +1,48 @@
 import { CellStatus } from "../../../../helper/type";
-import { getFixedNumsInArea, updatedCellsByFixedArea } from "./fill-areas";
-describe("fillFixedSets", () => {
-  it("getFixedNumsInArea", () => {
-    const r = getFixedNumsInArea([
+import {
+  pickFixedNumsInSeparations,
+  updatedCellsByFixedArea,
+} from "./fill-fixed-separations";
+describe("fillFixedSeparations", () => {
+  it("pickFixedNumsInSeparations", () => {
+    const r = pickFixedNumsInSeparations([
       [
-        { area: [1], startIndex: 0 },
-        { area: [2], startIndex: 2 },
+        { numsInSeparation: [1], startIndex: 0 },
+        { numsInSeparation: [2], startIndex: 2 },
       ],
       [
-        { area: [1], startIndex: 0 },
-        { area: [], startIndex: 2 },
+        { numsInSeparation: [1], startIndex: 0 },
+        { numsInSeparation: [], startIndex: 2 },
       ],
     ]);
 
     expect(r).toStrictEqual([
       {
-        fixedArea: [1],
+        fixedSeparation: [1],
         startIndex: 0,
       },
     ]);
 
-    const r2 = getFixedNumsInArea([
+    const r2 = pickFixedNumsInSeparations([
       [
-        { area: [1], startIndex: 0 },
-        { area: [2], startIndex: 2 },
-        { area: [3], startIndex: 5 },
+        { numsInSeparation: [1], startIndex: 0 },
+        { numsInSeparation: [2], startIndex: 2 },
+        { numsInSeparation: [3], startIndex: 5 },
       ],
       [
-        { area: [1], startIndex: 0 },
-        { area: [], startIndex: 2 },
-        { area: [3], startIndex: 5 },
+        { numsInSeparation: [1], startIndex: 0 },
+        { numsInSeparation: [], startIndex: 2 },
+        { numsInSeparation: [3], startIndex: 5 },
       ],
     ]);
 
     expect(r2).toStrictEqual([
       {
-        fixedArea: [1],
+        fixedSeparation: [1],
         startIndex: 0,
       },
       {
-        fixedArea: [3],
+        fixedSeparation: [3],
         startIndex: 5,
       },
     ]);
@@ -49,23 +52,23 @@ describe("fillFixedSets", () => {
     const r = updatedCellsByFixedArea(
       [
         {
-          areaLength: 10,
+          separationsLength: 10,
           startIndex: 0,
           endIndex: 9,
         },
         {
-          areaLength: 4,
+          separationsLength: 4,
           startIndex: 11,
           endIndex: 14,
         },
       ],
       [
         {
-          fixedArea: [4],
+          fixedSeparation: [4],
           startIndex: 0,
         },
         {
-          fixedArea: [3],
+          fixedSeparation: [3],
           startIndex: 11,
         },
       ],
