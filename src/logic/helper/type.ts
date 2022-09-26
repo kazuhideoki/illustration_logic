@@ -8,3 +8,11 @@ export type IndexedCellStatus = {
   index: number | null;
   cell: CellStatus;
 };
+
+export type SeparatedArea = {
+  areaLength: number;
+  startIndex: number;
+  endIndex: number;
+};
+
+export type SeparatedPattern = { area: number[]; startIndex: number }[];

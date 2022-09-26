@@ -1,4 +1,5 @@
-import { printAnswer, solve } from "./solve/solve";
+import { printAnswer } from "./helper/print-answer";
+import { solve } from "./solve/solve";
 
 // 入力
 const problem: {
